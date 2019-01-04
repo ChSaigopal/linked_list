@@ -1,0 +1,195 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int data;//data part
+	struct node *next;//next is the next node address part
+};
+struct node* start;//address of the starting node
+
+//create a node 
+struct node* getnode()
+{
+	struct node* newnode;
+	newnode=(struct node*) malloc(sizeof(struct node));
+	printf("enter the data value \n");
+	scanf("%d", &newnode->data);
+	newnode->next=NULL;
+	return newnode;
+}
+
+//Used to create a list 
+createlist()
+{
+	int i,n;
+	struct node* newnode,*temp;
+	printf("enter the size of list\n");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		newnode=getnode();
+		if(start==NULL)
+		{
+			start=newnode;
+		}
+		else
+		{
+			temp=start;
+			while(temp->next!=NULL)
+			{
+				temp=temp->next;
+			}
+			temp->next=newnode;
+		}
+		display();
+	}
+}
+
+//insert at the beginning 
+insbeg()
+{
+	struct node* newnode;
+	newnode=getnode();
+	if(start==NULL)
+	{
+		start=newnode;
+	}
+	else
+	{
+		newnode->next=start;
+		start=newnode;
+	}	
+	display();
+}
+
+// insert at the end of the list 
+insend()
+{
+	struct node* newnode,*temp;
+	newnode=getnode();
+	if(start==NULL)
+	{
+		start=newnode;
+	}
+	else
+	{
+		temp=start;
+		while(temp->next!=NULL)
+			{
+				temp=temp->next;
+			}
+			temp->next=newnode;
+	}
+	display();
+}
+
+
+//insert at a certain position
+inspos()
+{
+	int i,p;
+	struct node *pre,*newnode,*temp;
+	newnode=getnode();
+	printf("enter the position except 1");
+	scanf("%d",&p);
+	temp=start;
+	for(i=0;i<p-1;i++)
+	{
+		pre=temp;
+		temp=temp->next;
+	}
+	pre->next=newnode;
+	newnode->next=temp;
+	display();
+}
+
+//delete at the beginning 
+delbeg()
+{
+	struct node *temp;
+	temp=start;
+	start=start->next;
+	free(temp);
+	display();
+}
+
+//delete at the end of the list 
+delend()
+{
+	struct node *pre,*temp;
+	temp=start;
+	while(temp->next!=NULL)
+	{
+		pre=temp;
+		temp=temp->next;
+	}
+	pre->next=NULL;
+	free(temp);
+	display();
+}
+
+//delete at a certain position 
+delpos()
+{
+	int i,p;
+	struct node *pre,*q,*temp;
+	printf("enter the position except 1");
+	scanf("%d",&p);
+	temp=start;
+	for(i=0;i<p-1;i++)
+	{
+		pre=temp;
+		temp=temp->next;
+	}
+	q=temp->next;
+	pre->next=q;
+	free(temp);
+	display();
+}
+
+display()
+{
+	struct node *temp;
+	temp=start;
+	while(temp!=NULL)
+	{
+		printf("%d->",temp->data);
+		temp=temp->next;
+	}
+}
+
+
+main()
+{
+	int c;
+	while(1)
+	{
+		printf("\n 1.createlist 2.insbeg 3.insend() 4.inspos 5.delbeg 6.delend 7.delpos 8.display 9.exit\n");
+		printf("enter the choice\n");
+		scanf("%d",&c);
+		switch(c)
+		{
+			case 1:createlist();
+					break;	
+			case 2:insbeg();
+					break;
+			case 3:insend();
+					break;
+			case 4:inspos();
+					break;
+			case 5:delbeg();
+					break;
+			case 6:delend();
+					break;
+			case 7:delpos();			
+					break;
+			case 8:display();
+					break;
+			case 9:exit(0);
+			
+			default:printf("enter valid option");
+					break;		
+		}
+	}
+}
